@@ -20,8 +20,15 @@
     "es-dirname": "^0.1.0",
     "express": "^4.17.1",
     "express-boom": "^3.0.0",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.10.0",
     "helmet": "^4.4.1",
-    "morgan": "^1.10.0"
+    "mongoose": "^5.12.3",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.1.22",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "tailwindcss": "^2.1.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.7",

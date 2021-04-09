@@ -5,10 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>App</title>
+    <title>Login - App</title>
   </head>
   <body>
-    <a href="/login">Login</a>
+    <form action="/login" method="POST">
+      <input type="text" name="username" placeholder="Username" />
+      <input type="password" name="password" placeholder="Password" />
+      <button type="submit">Login</button>
+    </form>
 
     <script src="https://unpkg.com/lucia"></script>
   </body>
