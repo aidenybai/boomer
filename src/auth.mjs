@@ -5,10 +5,11 @@ import User from './models/User.mjs';
 
 export const strategy = new Strategy((username, password, done) => {
   User.findOne({ username }, async (err, user) => {
-    const isCorrectPassword = await bcrypt.compare(password, user.password);
-
     if (err) return done(err);
-    if (!user || !isCorrectPassword) return done(null, false);
+    if (!user) return done(null, false);
+
+    const isCorrectPassword = await bcrypt.compare(password, user.password);
+    if (!isCorrectPassword) return done(null, false);
     return done(null, user);
   });
 });

@@ -7,11 +7,16 @@
   "author": "Aiden Bai <hello@aidenybai.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.mjs --watch ./",
-    "start": "pm2 start src/server.mjs",
-    "cleanup": "prettier --write src"
+    "dev": "concurrently \"yarn server:dev\" \"yarn tailwind:dev\"",
+    "start": "yarn tailwind:build && yarn server:start",
+    "cleanup": "prettier --write src",
+    "server:dev": "nodemon src/server.mjs --watch ./",
+    "server:start": "pm2 start src/server.mjs",
+    "tailwind:dev": "npx postcss tailwind.css -o ./public/css/tailwind.css -w",
+    "tailwind:build": "npx postcss tailwind.css -o ./public/css/tailwind.css"
   },
   "dependencies": {
+    "autoprefixer": "^10.2.5",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
@@ -28,9 +33,12 @@
     "nanoid": "^3.1.22",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "postcss": "^8.2.9",
+    "postcss-cli": "^8.3.1",
     "tailwindcss": "^2.1.1"
   },
   "devDependencies": {
+    "concurrently": "^6.0.1",
     "nodemon": "^2.0.7",
     "pm2": "^4.5.6",
     "prettier": "^2.2.1"
