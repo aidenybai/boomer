@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { body, validationResult } from 'express-validator';
 import passport from 'passport';
 import auth from '../auth.mjs';
 
@@ -10,39 +9,25 @@ router.get('/', (_req, res) => {
 });
 
 router.get('/signup', (req, res) => {
-  if (req.user) {
-    res.redirect('/');
-  } else {
-    res.render('signup');
-  }
+  res.render('signup', { fail: req.query.fail });
 });
 
-router.post(
-  '/signup',
-  body('username').isLength({ min: 1 }),
-  body('password').isLength({ min: 1 }),
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.redirect('/signup');
-    }
-
-    await auth.createUser(req.body.username, req.body.password);
-    res.redirect('/login');
+router.post('/signup', async (req, res) => {
+  if (!req.body.username || !req.body.password) {
+    return res.redirect('/signup?fail=true');
   }
-);
+
+  await auth.createUser(req.body.username, req.body.password);
+  res.redirect('/login');
+});
 
 router.get('/login', (req, res) => {
-  if (req.user) {
-    res.redirect('/');
-  } else {
-    res.render('login');
-  }
+  res.render('login', { fail: req.query.fail });
 });
 
 router.post(
   '/login',
-  passport.authenticate('local', { failureRedirect: '/login' }),
+  passport.authenticate('local', { failureRedirect: '/login?fail=true' }),
   (_req, res) => {
     res.redirect('/');
   }
@@ -54,7 +39,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.use((_req, res) => {
-  res.boom.notFound();
+  res.render('404');
 });
 
 export default router;
