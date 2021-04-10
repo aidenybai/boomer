@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "concurrently \"yarn server:dev\" \"yarn tailwind:dev\"",
-    "start": "yarn tailwind:build && yarn server:start",
+    "start": "concurrently \"yarn tailwind:build\" \"yarn server:start\"",
     "cleanup": "prettier --write src",
     "server:dev": "nodemon src/server.mjs --watch ./",
     "server:start": "pm2 start src/server.mjs",
